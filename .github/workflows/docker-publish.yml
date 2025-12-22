@@ -27,8 +27,13 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/receipt-analytics:latest .
-
-      - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/receipt-analytics:latest
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        
+      - name: Build and push multi-arch image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/receipt-analytics:latest
+          platforms: linux/amd64,linux/arm64
