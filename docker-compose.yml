@@ -2,7 +2,7 @@ version: "3.9"
 
 services:
   receipt-analytics:
-    image: anupdochub/receipt-analytics:latest
+    image: anupdochub/receipt-analytics:${APP_VERSION:-1.0.0}
     container_name: receipt-analytics
     ports:
       - "8080:8080"
