@@ -172,6 +172,72 @@ docker compose pull
 docker compose up -d
 ```
 
+### Docker housekeeping on Raspberry Pi 🧹
+
+Sometimes your Pi can accumulate stopped containers, unused images, or volumes and run low on disk space. Use these commands **carefully** (avoid `-a` / `--volumes` on production without a backup):
+
+- Show all images and containers:
+
+```bash
+docker images -a
+docker ps -a
+docker system df
+```
+
+- Remove stopped containers and dangling resources (safe):
+
+```bash
+docker container prune -f  # remove stopped containers
+docker image prune -f      # remove dangling images
+docker volume prune -f     # remove unused volumes
+```
+
+- Remove all unused images (aggressive, frees more space):
+
+```bash
+docker image prune -a -f
+```
+
+- Full cleanup (dangerous: removes unused images, containers AND volumes):
+
+```bash
+docker system prune -a --volumes -f
+```
+
+- Remove a specific container or image (if you know the name/id):
+
+```bash
+docker rm -f receipt-postgres-local
+docker rmi anupdochub/receipt-analytics:1.0.3
+```
+
+> ⚠️ **Warning:** `docker system prune -a --volumes -f` will delete images and volumes. Always make sure you have backups or you are on a disposable/dev environment before using it.
+
+### Checking container logs 🐛
+
+To check logs from containers on your Pi:
+
+- For a single container:
+
+```bash
+docker logs -f <container-name-or-id>
+```
+
+- Using Docker Compose (service logs):
+
+```bash
+docker compose -f docker-compose.yml logs -f receipt-analytics
+# or for local compose
+docker compose -f docker-compose.local.yml logs -f receipt-postgres-local
+```
+
+- Check service status and health:
+
+```bash
+docker compose -f docker-compose.yml ps
+docker ps -a
+```
+
 ---
 
 ## 🧪 Running locally (development)
