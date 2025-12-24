@@ -174,6 +174,25 @@ docker compose up -d
 
 ---
 
+## 🧪 Running locally (development)
+
+To run the application locally with the development PostgreSQL container, activate the `local` profile which enables the project's development Docker Compose configuration:
+
+```bash
+mvn -Dspring-boot.run.profiles=local -DskipTests spring-boot:run
+```
+
+Alternatively start the DB manually and run without activating the profile:
+
+```bash
+docker compose -f docker-compose.local.yml up -d
+mvn -DskipTests spring-boot:run
+```
+
+> Note: The default profile has Docker Compose disabled to avoid unexpected environment changes during quick local runs.
+
+---
+
 ## 🔄 Rollback
 
 ```bash

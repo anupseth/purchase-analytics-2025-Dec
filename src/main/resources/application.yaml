@@ -1,3 +1,6 @@
 spring:
   application:
     name: receipt-analytics
+  docker:
+    compose:
+      enabled: false

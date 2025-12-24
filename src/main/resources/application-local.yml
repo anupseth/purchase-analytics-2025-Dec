@@ -1,0 +1,23 @@
+spring:
+  docker:
+    compose:
+      enabled: true
+      file: docker-compose.local.yml
+      lifecycle-management: start-and-stop
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/receipts
+    username: receipt_user
+    password: receipt_pass
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+server:
+  port: 8081
