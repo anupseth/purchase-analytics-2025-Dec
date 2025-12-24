@@ -1,0 +1,15 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: receipt-postgres-local
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: receipts
+      POSTGRES_USER: receipt_user
+      POSTGRES_PASSWORD: receipt_pass
+    volumes:
+      - postgres_data_local:/var/lib/postgresql/data
+
+volumes:
+  postgres_data_local:
